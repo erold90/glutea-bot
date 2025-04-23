@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from telegram.ext import ApplicationBuilder, CommandHandler
 
+from telegram.ext import CallbackQueryHandler
 from handlers.start import start
 from handlers.english import english
 from handlers.francais import francais
@@ -21,6 +22,7 @@ if __name__ == '__main__':
     app.add_handler(CommandHandler("italiano", italiano))
     app.add_handler(CommandHandler("espanol", espanol))
     app.add_handler(CommandHandler("russian", russian))
-
+    app.add_handler(CallbackQueryHandler(lambda update, context: context.bot.send_message(chat_id=update.effective_chat.id,text="/{}".format(update.callback_query.data))))
+    
     print("Bot is running...")
     app.run_polling()
